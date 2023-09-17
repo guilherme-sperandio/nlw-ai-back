@@ -1,0 +1,42 @@
+# @name get-prompts
+
+GET http://localhost:3333/prompts
+
+###
+
+# @name upload-video
+
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="ratinho.mp3"
+Content-Type: audio/mpeg
+
+< ./ratinho.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+# @name create-transcription
+
+POST  http://localhost:3333/videos/a4187abb-98bf-419c-8e18-bcb9de27d96e/transcription
+Content-Type: application/json
+
+{
+    "prompt": "ratinhoooo"
+}
+
+###
+
+# @name generate-completion
+
+POST  http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+    "videoId": "a4187abb-98bf-419c-8e18-bcb9de27d96e",
+    "template": "Gere um resumo sucinto da trasncrição do vídeo informada a seguir: '''{transcription}'''",
+    "temperature": 0.5
+}
